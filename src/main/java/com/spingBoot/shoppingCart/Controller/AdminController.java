@@ -40,7 +40,6 @@ public class AdminController {
     @GetMapping("/search-product-by/{productId}")
     public ResponseEntity<Product> searchProductById(@PathVariable Long productId) throws ProductNotFoundException {
         System.out.println("hello this is a product");
-
         return ResponseEntity.ok(productService.searchProductById(productId));
     }
 
