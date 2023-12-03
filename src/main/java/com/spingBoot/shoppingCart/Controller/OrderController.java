@@ -19,15 +19,15 @@ public class OrderController {
     }
 
 
-    @PostMapping("/api/user/purchase/{userId}")
-    public ResponseEntity<String> purchasedItems(@PathVariable long userId) throws RuntimeException, UserNotFoundException {
+    @PostMapping("/api/user/purchase")
+    public ResponseEntity<String> purchasedItems(@RequestParam long userId) throws RuntimeException, UserNotFoundException {
         orderService.purchasedItems(userId);
         return new ResponseEntity<>("purchase successfully", HttpStatus.OK);
 
     }
 
-    @GetMapping("/api/user/order-hostory/{userId}")
-    public ResponseEntity<List<OrderHistory>> getOrderHistory(@PathVariable long userId) throws UserNotFoundException {
+    @GetMapping("/api/user/order-hostory")
+    public ResponseEntity<List<OrderHistory>> getOrderHistory(@RequestParam long userId) throws UserNotFoundException {
         return ResponseEntity.ok(orderService.getOrderHistory(userId));
     }
 }

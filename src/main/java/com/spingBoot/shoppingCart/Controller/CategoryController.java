@@ -34,7 +34,7 @@ public class CategoryController {
         return categoryService.updateCategoryName(updateCategory);
     }
 
-    @DeleteMapping("/api/admin/{id}")
+    @DeleteMapping("/api/admin")
     public void deleteCategory(@RequestParam long id) {
         categoryService.deleteCategory(id);
     }

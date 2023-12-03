@@ -61,8 +61,8 @@ public class AdminController {
         return ResponseEntity.ok().body(productService.save(addProduct));
     }
 
-    @PutMapping("/updateQuantity/{productId}")
-    public ResponseEntity<String> updateQuantityInStock(@PathVariable long productId, @RequestParam int newQuantity) {
+    @PutMapping("/updateQuantity")
+    public ResponseEntity<String> updateQuantityInStock(@RequestParam long productId, @RequestParam int newQuantity) {
         productService.UpdateProductQuantity(productId, newQuantity);
         return ResponseEntity.ok("quantity update successfully...!");
     }
@@ -74,8 +74,8 @@ public class AdminController {
 
     }
 
-    @DeleteMapping("/deleteProduct/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable long productId) {
+    @DeleteMapping("/deleteProduct")
+    public ResponseEntity<String> deleteProduct(@RequestParam long productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.ok("Deleted item " + productId);
     }

@@ -30,8 +30,8 @@ public class CartItemController {
 
     }
 
-    @GetMapping("api/user/view-cart/{userId}")
-    public ResponseEntity<List<CartItems>> viewCardItems(@PathVariable long userId) throws UserNotFoundException {
+    @GetMapping("api/user/view-cart")
+    public ResponseEntity<List<CartItems>> viewCardItems(@RequestParam long userId) throws UserNotFoundException {
         return ResponseEntity.ok(cartService.viewCardItems(userId));
     }
 
