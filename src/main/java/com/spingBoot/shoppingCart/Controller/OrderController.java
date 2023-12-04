@@ -26,7 +26,7 @@ public class OrderController {
 
     }
 
-    @GetMapping("/api/user/order-hostory")
+    @GetMapping("/api/user/order-history")
     public ResponseEntity<List<OrderHistory>> getOrderHistory(@RequestParam long userId) throws UserNotFoundException {
         return ResponseEntity.ok(orderService.getOrderHistory(userId));
     }

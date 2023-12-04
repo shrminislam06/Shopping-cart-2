@@ -25,4 +25,5 @@ public interface ProductService {
     Product searchProductById(Long productId) throws ProductNotFoundException;
 
 
+    List<Product> filterBypriceInAsc(String productName)throws  ProductNotFoundException;
 }

@@ -10,6 +10,7 @@ import java.util.Set;
 public interface ProductRepository extends JpaRepository<Product,Long> {
     Set<Product>findAllByIdIn(Set<Long>productIds);
 
+    List<Product>findByNameContainingIgnoreCaseOrderByPriceDesc(String name);
     List<Product>findByNameContainingIgnoreCaseAndCategory_NameIgnoreCase(String name,String categoryName);
 
 }

@@ -2,13 +2,11 @@ package com.spingBoot.shoppingCart.Controller;
 
 import com.spingBoot.shoppingCart.Entity.Category;
 import com.spingBoot.shoppingCart.Entity.Product;
+import com.spingBoot.shoppingCart.Exception.ProductNotFoundException;
 import com.spingBoot.shoppingCart.Repository.CategoryPrepository;
 import com.spingBoot.shoppingCart.Service.ProductService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,5 +31,10 @@ public class FilterController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/api/user/product-filter-by-price")
+    public ResponseEntity<List<Product>>filterBypriceInAsc(@RequestParam String productName)throws ProductNotFoundException {
+        return ResponseEntity.ok(productService.filterBypriceInAsc(productName));
     }
 }

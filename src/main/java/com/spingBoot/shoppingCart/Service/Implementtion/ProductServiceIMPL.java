@@ -88,5 +88,16 @@ public class ProductServiceIMPL implements ProductService {
         return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
 
+    @Override
+    public List<Product> filterBypriceInAsc(String productName) throws ProductNotFoundException {
+        List<Product>productList=productRepository.findByNameContainingIgnoreCaseOrderByPriceDesc(productName);
+        if(productList.isEmpty()){
+            throw new ProductNotFoundException();
+        }else {
+            return productList;
+        }
+
+    }
+
 
 }
