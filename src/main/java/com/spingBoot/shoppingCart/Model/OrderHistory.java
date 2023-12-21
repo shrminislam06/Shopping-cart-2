@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.SecondaryTable;
+import jakarta.persistence.SecondaryTable;
 import java.util.Date;
 @Getter
 @Setter

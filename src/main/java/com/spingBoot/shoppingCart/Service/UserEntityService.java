@@ -1,18 +1,22 @@
 package com.spingBoot.shoppingCart.Service;
 
 import com.spingBoot.shoppingCart.Entity.UserEntity;
+import com.spingBoot.shoppingCart.Exception.UserNameAlreadyExistException;
 import com.spingBoot.shoppingCart.Exception.UserNotFoundException;
 import com.spingBoot.shoppingCart.Model.UpdateUserInfo;
 import com.spingBoot.shoppingCart.Model.UserRegisterModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import javax.naming.NameAlreadyBoundException;
 import java.util.List;
 
 public interface UserEntityService {
-    void saveUser(UserRegisterModel userModel);
+    String saveUser(UserEntity userModel) throws UserNameAlreadyExistException;
 
-    UserEntity getUserByUsername(String username) throws UserNotFoundException;
+    UserEntity getUserByEmail(String email) throws UserNotFoundException;
 
-   List <UserEntity> getAll();
+   Page <UserEntity> getAll(Pageable pageable);
 
     void updateUserInfo(UpdateUserInfo updateUserInfo) throws UserNotFoundException;
 

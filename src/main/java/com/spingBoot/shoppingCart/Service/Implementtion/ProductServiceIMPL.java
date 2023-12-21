@@ -9,6 +9,10 @@ import com.spingBoot.shoppingCart.Model.UpdateProductInfo;
 import com.spingBoot.shoppingCart.Repository.CategoryPrepository;
 import com.spingBoot.shoppingCart.Repository.ProductRepository;
 import com.spingBoot.shoppingCart.Service.ProductService;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +29,9 @@ public class ProductServiceIMPL implements ProductService {
     }
 
     @Override
-    public List<Product> productList() {
-        return productRepository.findAll();
+    public Page<Product> productList(Pageable pageable) {
+
+        return productRepository.findAll(pageable);
     }
 
 
@@ -73,7 +78,6 @@ public class ProductServiceIMPL implements ProductService {
     @Override
     public void updateProductInfo(UpdateProductInfo updateProductInfo) throws ProductNotFoundException {
         Product product=productRepository.findById(updateProductInfo.getId()).get();
-        System.out.println(updateProductInfo.getId());
         if(product!=null){
             product.setName(updateProductInfo.getName());
             product.setPrice(updateProductInfo.getPrice());

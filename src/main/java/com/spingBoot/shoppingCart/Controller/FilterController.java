@@ -6,6 +6,7 @@ import com.spingBoot.shoppingCart.Exception.ProductNotFoundException;
 import com.spingBoot.shoppingCart.Repository.CategoryPrepository;
 import com.spingBoot.shoppingCart.Service.ProductService;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,8 @@ public class FilterController {
         this.categoryPrepository = categoryPrepository;
     }
 
-    @GetMapping("/api/user/product/filterByNameAndCategory")
+    @GetMapping("/public/product/filterByNameAndCategory")
+
     public ResponseEntity<List<Product>> filterByNameAndCategory(@RequestParam String productName, @RequestParam String categoryName) throws Exception {
         Optional<Category> cat = categoryPrepository.findByNameContainingIgnoreCase(categoryName);
         if (cat.isPresent()) {
@@ -33,7 +35,7 @@ public class FilterController {
         }
     }
 
-    @GetMapping("/api/user/product-filter-by-price")
+    @GetMapping("/public/product-filter-by-price")
     public ResponseEntity<List<Product>>filterBypriceInAsc(@RequestParam String productName)throws ProductNotFoundException {
         return ResponseEntity.ok(productService.filterBypriceInAsc(productName));
     }

@@ -12,9 +12,9 @@ import lombok.Setter;
 public class UserRegisterModel {
 
     private long id;
-    private String username;
+    private String name;
     private String password;
     private String phone;
     private String email;
-    private String roles;
+    private String role;
 }

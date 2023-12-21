@@ -8,35 +8,51 @@ import com.spingBoot.shoppingCart.Model.UserRegisterModel;
 
 import com.spingBoot.shoppingCart.Repository.UserRepository;
 import com.spingBoot.shoppingCart.Service.UserEntityService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.naming.NameAlreadyBoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserEntityServiceIMPL implements UserEntityService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
 
-    public UserEntityServiceIMPL(UserRepository userRepository) {
+
+    public UserEntityServiceIMPL(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
 
 
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     @Override
-    public void saveUser(UserRegisterModel user) throws UserNameAlreadyExistException {
-        UserEntity optionalUserEntity=userRepository.findByUsername(user.getUsername());
-        if (optionalUserEntity==null) {
-            UserEntity userEntity = new UserEntity();
-            userEntity.setId(user.getId());
-            userEntity.setUsername(user.getUsername());
-            userEntity.setEmail(user.getEmail());
-            userEntity.setPhone(user.getPhone());
-            userEntity.setPassword(user.getPassword());
-            userEntity.setRoles(user.getRoles());
-            userRepository.save(userEntity);
+    public String saveUser(UserEntity user) throws UserNameAlreadyExistException{
+//       Optional<UserEntity> optionalUserEntity=userRepository.findByEmail(user.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        UserEntity userEntity= userRepository.save(user);
+        if (userEntity.getId()>0) {
+//            UserEntity userEntity = new UserEntity();
+//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//            userEntity.setId(user.getId());
+//            userEntity.setName(user.getName());
+//            userEntity.setEmail(user.getEmail());
+//            userEntity.setPhone(user.getPhone());
+//            userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+//            userEntity.setRoles(authentication.get);
+            return "user added";
+
         } else {
             throw new UserNameAlreadyExistException();
         }
@@ -45,26 +61,26 @@ public class UserEntityServiceIMPL implements UserEntityService {
 
 
     @Override
-    public UserEntity getUserByUsername(String username) throws UserNotFoundException {
-        UserEntity user = userRepository.findByUsername(username);
-        if(user==null){
+    public UserEntity getUserByEmail(String email) throws UserNotFoundException {
+        Optional<UserEntity> user = userRepository.findByEmail(email);
+        if(!user.isPresent()){
             throw new UserNotFoundException();
         }else {
-            return user;
+            return user.get();
         }
 
     }
 
     @Override
-    public List<UserEntity> getAll() {
-        return userRepository.findAll();
+    public Page<UserEntity> getAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
 
     @Override
     public void updateUserInfo(UpdateUserInfo updateUserInfo) throws UserNotFoundException {
         UserEntity user = userRepository.findById(updateUserInfo.getId()).orElseThrow(UserNotFoundException::new);
-        user.setUsername(updateUserInfo.getUserName());
+        user.setName(updateUserInfo.getUserName());
         user.setPassword(updateUserInfo.getPassword());
         userRepository.save(user);
     }

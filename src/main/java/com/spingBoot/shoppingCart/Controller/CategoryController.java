@@ -5,6 +5,8 @@ import com.spingBoot.shoppingCart.Model.UpdateCategory;
 import com.spingBoot.shoppingCart.Service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,17 +26,20 @@ public class CategoryController {
         return categoryService.getAllCategory();
     }
 
-    @PostMapping("/api/admin/save")
+    @PostMapping("/category/save")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.save(category));
     }
 
-    @PutMapping("/api/admin/update")
+    @PutMapping("/api/categoy/update")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public Category updatecategory(@RequestBody UpdateCategory updateCategory) {
         return categoryService.updateCategoryName(updateCategory);
     }
 
-    @DeleteMapping("/api/admin")
+    @DeleteMapping("/api/category/delete")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteCategory(@RequestParam long id) {
         categoryService.deleteCategory(id);
     }
